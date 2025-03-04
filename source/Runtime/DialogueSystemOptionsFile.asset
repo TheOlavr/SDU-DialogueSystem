@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74f0c36d00a25a47a55cd7574e78575, type: 3}
   m_Name: DialogueSystemOptionsFile
   m_EditorClassIdentifier: 
-  CurrentLanguageIndex: 0
-  LanguageNames:
-  - ENG
   ActiveSubmitKey: 13
   AltSubmitKey: 122
   ActiveSkipKey: 303
@@ -22,7 +19,7 @@ MonoBehaviour:
   ActiveSkipToAllKey: 305
   AltSkipToAllKey: 99
   DefaultTickTime: 0.0432
-  DefaultFont: {fileID: 0}
+  DefaultFont: {fileID: 12800000, guid: f8424fd662e0a9440ae34e40a55849c4, type: 3}
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}
   SoundlessChars: 20002e002c003f00
   IntervalChars:

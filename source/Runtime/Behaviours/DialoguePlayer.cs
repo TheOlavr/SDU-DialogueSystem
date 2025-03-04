@@ -32,7 +32,7 @@ namespace SimpleDialogue
         /// <summary>
         /// Playing current dialogue stops prewious
         /// </summary>
-        public void Play()
+        public virtual void Play()
         {
             PlayDialogue(false);
         }
@@ -40,7 +40,7 @@ namespace SimpleDialogue
         /// <summary>
         /// Playing current dialogue only if prewious is finished
         /// </summary>
-        public void TryPlay()
+        public virtual void TryPlay()
         {
             PlayDialogue(true);
         }

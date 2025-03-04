@@ -44,7 +44,7 @@ namespace SimpleDialogueEditor
 
             DialogueSystem.OnKeysUpdate += KeysUpdate;
             DialogueSystem.OnSettingsUpdate += SettingsUpdate;
-            DialogueSystem.OnLanguageChange += OnLanguageChange;
+            //DialogueSystem.OnLanguageChange += OnLanguageChange;
         }
 
         [MenuItem("Tools/Dialogue System Editor")]
@@ -109,15 +109,15 @@ namespace SimpleDialogueEditor
                 activeSkipToAllKey = DialogueOptions.ActiveSkipToAllKey;
                 altSkipToAllKey = DialogueOptions.AltSkipToAllKey;
 
-                currentLanguageIndex = DialogueOptions.CurrentLanguageIndex;
-                languageNames = DialogueOptions.LanguageNames;
+                //currentLanguageIndex = DialogueOptions.CurrentLanguageIndex;
+                //languageNames = DialogueOptions.LanguageNames;
 
                 isLanguageEditing = false;
             }
             else
             {
-                languageNames = DialogueSystem.GetLanguagesArray();
-                currentLanguageIndex = DialogueSystem.LanguageIndex;
+                //languageNames = DialogueSystem.GetLanguagesArray();
+                //currentLanguageIndex = DialogueSystem.LanguageIndex;
             }
         }
 
@@ -133,7 +133,7 @@ namespace SimpleDialogueEditor
             if (!Application.isPlaying)
             {
 
-                if (!isLanguageEditing)
+               /* if (!isLanguageEditing)
                 {
                     ViewLanguage();
                     EditorGUILayout.Space(3f);
@@ -152,11 +152,12 @@ namespace SimpleDialogueEditor
                         isLanguageEditing = false;
                         titleContent = new GUIContent("Dialogue System", _mainIcon);
                     }
-                }
+                } */
 
                 if (!isLanguageEditing)
                 {
                     EditorGUILayout.Space(5f);
+                    EditorGUILayout.LabelField("Input", EditorStyles.boldLabel);
                     EditorGUILayout.BeginHorizontal();
                     activeSubmitKey = (KeyCode)EditorGUILayout.EnumPopup("Active Submit Key", activeSubmitKey, EditorStyles.popup, GUILayout.Height(20));
                     altSubmitKey = (KeyCode)EditorGUILayout.EnumPopup("Alt Submit Key", altSubmitKey, EditorStyles.popup, GUILayout.Height(20));
@@ -173,11 +174,9 @@ namespace SimpleDialogueEditor
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUILayout.Space(5f);
+                    EditorGUILayout.LabelField("Default Settings", EditorStyles.boldLabel);
 
                     tickTime = EditorGUILayout.Slider("Tick Time", tickTime, 0.0015f, 0.3f);
-
-                    EditorGUILayout.Space(5f);
-
                     font = (Font)EditorGUILayout.ObjectField("Font", font, typeof(Font), false);
                     color = EditorGUILayout.ColorField("Color", color);
 
@@ -253,8 +252,8 @@ namespace SimpleDialogueEditor
                 }
                 
 
-                DialogueOptions.CurrentLanguageIndex = currentLanguageIndex;
-                DialogueOptions.LanguageNames = languageNames;
+                //DialogueOptions.CurrentLanguageIndex = currentLanguageIndex;
+                //DialogueOptions.LanguageNames = languageNames;
                 DialogueOptions.ActiveSubmitKey = activeSubmitKey;
                 DialogueOptions.AltSubmitKey = altSubmitKey;
                 DialogueOptions.ActiveSkipKey = activeSkipKey;
@@ -270,9 +269,10 @@ namespace SimpleDialogueEditor
             }
             else
             {
-                ViewLanguage();
-                DialogueSystem.SetLanguageOptions(languageNames, currentLanguageIndex);
+                //ViewLanguage();
+                //DialogueSystem.SetLanguageOptions(languageNames, currentLanguageIndex);
                 EditorGUILayout.Space(5f);
+                EditorGUILayout.LabelField("Input", EditorStyles.boldLabel);
                 EditorGUILayout.BeginHorizontal();
                 DialogueSystem.ActiveSubmitKey = (KeyCode)EditorGUILayout.EnumPopup("Active Submit Key", DialogueSystem.ActiveSubmitKey);
                 DialogueSystem.AltSubmitKey = (KeyCode)EditorGUILayout.EnumPopup("Alt Submit Key", DialogueSystem.AltSubmitKey);
@@ -288,6 +288,7 @@ namespace SimpleDialogueEditor
                 DialogueSystem.AltSkipToAllKey = (KeyCode)EditorGUILayout.EnumPopup("Alt SkipToAll Key", DialogueSystem.AltSkipToAllKey);
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Space(15f);
+                EditorGUILayout.LabelField("Default Settings", EditorStyles.boldLabel);
                 DialogueSystem.DefaultSettings.TickTime = tickTime = EditorGUILayout.Slider("Tick Time", DialogueSystem.DefaultSettings.TickTime, 0.0015f, 0.3f);
                 DialogueSystem.DefaultSettings.Font = (Font)EditorGUILayout.ObjectField("Font", DialogueSystem.DefaultSettings.Font, typeof(Font), false);
                 DialogueSystem.DefaultSettings.Color = EditorGUILayout.ColorField("Color", DialogueSystem.DefaultSettings.Color);

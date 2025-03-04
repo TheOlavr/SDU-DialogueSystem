@@ -13,7 +13,7 @@ namespace SimpleDialogueEditor
         static Base64DataAssigner()
         {
             AssignIconsFromAttributes();
-
+            
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
         }
 
@@ -46,7 +46,7 @@ namespace SimpleDialogueEditor
                         continue;
                     }
 
-                    MonoScript monoScript = GetMonoScriptForType(type);
+                    MonoScript monoScript = GetMonoScriptForType(type); 
                     if (monoScript != null)
                     {
                         EditorGUIUtility.SetIconForObject(monoScript, icon);

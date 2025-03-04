@@ -28,19 +28,19 @@ namespace SimpleDialogue
         private AudioSource _audioSource;
 
         public AudioSource ActiveAudioSource { get { return _audioSource; } private set { } }
-        public Boolean IsPlaying {  get; private set; }
+        public Boolean IsPlaying { get; private set; }
 
         private void Awake()
         {
             DialogueSystem.SetAllOptions(_dialogueSystemStaticOptions);
             DialogueSystem.SetAllOptions(this);
+            IsPlaying = false;
         }
 
         private Dialogue _currentDialogue;
         private DialogueMessage _currentDialogueMessage;
         private string[] _textArray;
         private int _currentMessageIndex;
-        private byte _currentLanguage;
 
         public void PlayDialogue(Dialogue dialogue)
         {
@@ -75,6 +75,9 @@ namespace SimpleDialogue
         private float autoDelay;
         private bool cantSkip;
 
+        // Dynamic Sprite index
+        private int changeSpriteOffsetIndex;
+
         private IEnumerator targetPrintMessageCoroutine;
         private IEnumerator targetWaitForSkipCoroutine;
         private IEnumerator targetEndMessageCoroutine;
@@ -87,7 +90,7 @@ namespace SimpleDialogue
             _withSpriteText.text = string.Empty;
             _withoutSpriteText.text = string.Empty;
             // FOR text
-            string text = _currentDialogueMessage.Text[_currentLanguage];
+            string text = _currentDialogueMessage.Text;
             _textArray = _currentDialogueMessage.GetTextArray();
             // OUT text
             string currentText = "";
@@ -115,6 +118,9 @@ namespace SimpleDialogue
             autoDelay = _currentDialogueMessage.Overrides.AutomaticalyDelay;
             cantSkip = _currentDialogueMessage.Overrides.CantSkip;
 
+            // Dynamic Sprite index
+            changeSpriteOffsetIndex = 0;
+
             DialogueMessage.MessageOverrides overrides = _currentDialogueMessage.Overrides;
 
             // Override font
@@ -140,6 +146,8 @@ namespace SimpleDialogue
             // Sound mode
             int soundMode = (int)overrides.SoundMode;
             AudioClip originClip = _currentDialogueMessage.SpeakerSound;
+
+            _audioSource.Stop();
 
             // Change default Text fields
             if (overrides.DoDefaultTextColor)
@@ -192,14 +200,23 @@ namespace SimpleDialogue
                     {
                         _spriteImage.sprite = dynamicSources.SpriteLoop[dynamicSpriteIndex];
 
-                        if (dynamicSpriteIndex < dynamicSources.SpriteLoop.Length - 1)
+                        if (changeSpriteOffsetIndex < dynamicSources.SpriteLoopOffset)
                         {
-                            dynamicSpriteIndex++;
+                            changeSpriteOffsetIndex++;
                         }
                         else
                         {
-                            dynamicSpriteIndex = 0;
+                            if (dynamicSpriteIndex < dynamicSources.SpriteLoop.Length - 1)
+                            {
+                                dynamicSpriteIndex++;
+                            }
+                            else
+                            {
+                                dynamicSpriteIndex = 0;
+                            }
+                            changeSpriteOffsetIndex = 0;
                         }
+
                     }
 
                     // Sound by Char

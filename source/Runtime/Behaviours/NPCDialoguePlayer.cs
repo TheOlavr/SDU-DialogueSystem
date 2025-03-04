@@ -86,10 +86,25 @@ namespace SimpleDialogue
             }
         }
 
+        public override void Play()
+        {
+            PlayNext(false);
+        }
+
+        public override void TryPlay()
+        {
+            PlayNext(true);
+        }
+
         /// <summary>
         /// Plays the next dialogue by Sequence
-        /// </summary>
+        /// </summary> 
         public void PlayNext()
+        {
+            PlayNext(true);
+        }
+
+        public void PlayNext(bool isTrying)
         {
             if (_correctFields)
             {
@@ -97,7 +112,7 @@ namespace SimpleDialogue
                 {
                     base.CurrentDialogue = Dialogues[_currentDialogueIndex];
                     base.OnDialogueFinish = FinishEvents[_currentDialogueIndex];
-                    base.Play();
+                    base.PlayDialogue(isTrying);
                     if (_animatedNPCSprite)
                     {
                         StopCoroutine(_spriteLoopCoroutine);
@@ -137,7 +152,6 @@ namespace SimpleDialogue
         /// <summary>
         /// Plays dialogue by Sequence index
         /// </summary>
-        /// <param name="index"></param>
         public void PlayIndex(int index)
         {
             if (_correctFields)

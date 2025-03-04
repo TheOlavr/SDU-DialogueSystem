@@ -6,7 +6,7 @@ namespace SimpleDialogue
     [Serializable]
     public class DialogueMessage
     {
-        public string[] Text;
+        public string Text;
         public Sprite SpeakerIcon;
         public AudioClip SpeakerSound;
 
@@ -20,6 +20,9 @@ namespace SimpleDialogue
 
             public bool DoMessageFont;
             public Font MessageFont;
+
+            public bool DoDefaultTextColor;
+            public Color DefaultTextColor;
 
             public enum MessageSoundMode
             {
@@ -40,9 +43,6 @@ namespace SimpleDialogue
             public FinishMessageMode FinishMessage;
             public float AutomaticalyDelay;
             public bool CantSkip;
-
-            public bool DoDefaultTextColor;
-            public Color DefaultTextColor;
 
             public bool DoDefaultTextSize;
             public int DefaultTextSize;
@@ -96,6 +96,7 @@ namespace SimpleDialogue
             public bool DynamicSprite;
             public Sprite[] SpriteLoop;
             public Sprite LastSpriteInLoop;
+            public int SpriteLoopOffset;
 
             public bool DynamicSound;
             public AudioClip[] ChangingSounds;
@@ -110,56 +111,56 @@ namespace SimpleDialogue
         }
 
         public MessageOverrides Overrides;
-        public MessageRelativeFormats[] RelativeFormats;
+        public MessageRelativeFormats RelativeFormats;
         public MessageDynamicSources DynamicSources;
 
         //GET PARAMETERS
         public string[] GetTextArray()
         {
-            string text = this.GetLanguageText();
+            string text = Text;
             char[] charArray = text.ToCharArray();
             string[] outText = new string[charArray.Length];
             if (charArray != null)
             for (int i = 0; i < charArray.Length; i++) outText[i] = $"{charArray[i]}";
 
-            for (int i = 0; RelativeFormats[DialogueSystem.LanguageIndex].RelativeColors.Length > i; i++)
+            for (int i = 0; RelativeFormats.RelativeColors.Length > i; i++)
             {
-                MessageRelativeFormats.RelativeColorFormat relativeFormat = RelativeFormats[DialogueSystem.LanguageIndex].RelativeColors[i];
+                MessageRelativeFormats.RelativeColorFormat relativeFormat = RelativeFormats.RelativeColors[i];
 
-                for (int charindex = relativeFormat.Start + 1; relativeFormat.End > charindex; charindex++)
+                for (int charindex = relativeFormat.Start; (relativeFormat.End + 1) > charindex; charindex++)
                 {
                     Color currentColor = relativeFormat.Format;
                     if (relativeFormat.Gradient)
                     {
-                        float t = (charindex - (relativeFormat.Start + 1)) / (float)(relativeFormat.End - relativeFormat.Start - 1);
+                        float t = (charindex - (relativeFormat.Start)) / (float)((relativeFormat.End + 1) - relativeFormat.Start);
                         currentColor = relativeFormat.GradientFormat.Evaluate(t);
                     }
                     outText[charindex] = this.AddColorFormat(outText[charindex], currentColor);
                 }
             }
 
-            for (int i = 0; RelativeFormats[DialogueSystem.LanguageIndex].RelativeSizes.Length > i; i++)
+            for (int i = 0; RelativeFormats.RelativeSizes.Length > i; i++)
             {
-                MessageRelativeFormats.RelativeSizeFormat relativeFormat = RelativeFormats[DialogueSystem.LanguageIndex].RelativeSizes[i];
+                MessageRelativeFormats.RelativeSizeFormat relativeFormat = RelativeFormats.RelativeSizes[i];
 
-                for (int charindex = relativeFormat.Start + 1; relativeFormat.End > charindex; charindex++)
+                for (int charindex = relativeFormat.Start; (relativeFormat.End + 1) > charindex; charindex++)
                 {
 
                     float currentSize = relativeFormat.Format;
                     if (relativeFormat.Lerp)
                     {
-                            float t = (charindex - (relativeFormat.Start + 1)) / (float)(relativeFormat.End - relativeFormat.Start - 1);
+                            float t = (charindex - (relativeFormat.Start)) / (float)((relativeFormat.End + 1) - relativeFormat.Start);
                             currentSize = Mathf.Lerp(relativeFormat.FormatOnStart, relativeFormat.FormatOnEnd, t);
                     }
                     outText[charindex] = this.AddSizeFormat(outText[charindex], currentSize);
                 }
             }
 
-            for (int i = 0; RelativeFormats[DialogueSystem.LanguageIndex].RelativeFontstyles.Length > i; i++)
+            for (int i = 0; RelativeFormats.RelativeFontstyles.Length > i; i++)
             {
-                MessageRelativeFormats.RelativeFontStyleFormat relativeFormat = RelativeFormats[DialogueSystem.LanguageIndex].RelativeFontstyles[i];
+                MessageRelativeFormats.RelativeFontStyleFormat relativeFormat = RelativeFormats.RelativeFontstyles[i];
 
-                for (int charindex = relativeFormat.Start+1; relativeFormat.End > charindex; charindex++)
+                for (int charindex = relativeFormat.Start; (relativeFormat.End + 1) > charindex; charindex++)
                 {
                     outText[charindex] = this.AddFontStyleFormat(outText[charindex], relativeFormat.Format);
                 }
@@ -168,7 +169,7 @@ namespace SimpleDialogue
             return outText;
         }
 
-        private string GetLanguageText()
+       /* private string GetLanguageText()
         {
             string currentText = Text[DialogueSystem.LanguageIndex];
             if (currentText != null)
@@ -179,7 +180,7 @@ namespace SimpleDialogue
             {
                 return Text[0];
             }
-        }
+        } */
 
         private string AddColorFormat(string charText, Color color)
         {
@@ -213,28 +214,30 @@ namespace SimpleDialogue
         }
 
         // CONSTRUCTOR
-        public DialogueMessage(string[] Text, Sprite SpeakerIcon, AudioClip SpeakerSound, byte languageCount)
+        public DialogueMessage(string Text, Sprite SpeakerIcon, AudioClip SpeakerSound, byte languageCount)
         {
-            this.Text = new string[Text.Length];
+           /* this.Text = new string[Text.Length];
             for (int i = 0; i < Text.Length; i++)
             {
                 this.Text[i] = Text[i];
-            }
+            } */
+            this.Text = Text;
             this.SpeakerIcon = SpeakerIcon;
             this.SpeakerSound = SpeakerSound;
-            this.Overrides = new MessageOverrides() { TickTime = 0.15f, SoundMode = MessageOverrides.MessageSoundMode.ByChar, FinishMessage = MessageOverrides.FinishMessageMode.Default, AutomaticalyDelay = 1f, DefaultTextColor = Color.white, DefaultTextSize = 20, };
-            this.RelativeFormats = new MessageRelativeFormats[languageCount];
+            this.Overrides = new MessageOverrides() { TickTime = 0.15f, SoundMode = MessageOverrides.MessageSoundMode.ByChar, FinishMessage = MessageOverrides.FinishMessageMode.Default, AutomaticalyDelay = 1f, DefaultTextColor = Color.white, DefaultTextSize = 50, };
+            this.RelativeFormats = new MessageRelativeFormats();
             this.DynamicSources = new MessageDynamicSources() { ChangingSoundsMode = MessageDynamicSources.ChangingSoundMode.Loop };
         }
 
         // DOUBLE CONSTRUCTOR
         public DialogueMessage(DialogueMessage reference)
         {
-            this.Text = new string[reference.Text.Length];
+           /* this.Text = new string[reference.Text.Length];
             for (int i = 0; i < reference.Text.Length; i++)
             {
                 this.Text[i] = reference.Text[i];
-            }
+            } */
+            this.Text = reference.Text;
             this.SpeakerIcon = reference.SpeakerIcon;
             this.SpeakerSound = reference.SpeakerSound;
             this.Overrides = reference.Overrides;
@@ -243,13 +246,13 @@ namespace SimpleDialogue
         }
 
         // EMPTY CONSTRUCTOR
-        public DialogueMessage(byte languageCount)
+        public DialogueMessage()
         {
-            this.Text = new string[languageCount];
+            this.Text = "";
             this.SpeakerIcon = null;
             this.SpeakerSound = null;
-            this.Overrides = new MessageOverrides() { TickTime = 0.15f, SoundMode = MessageOverrides.MessageSoundMode.ByChar, FinishMessage = MessageOverrides.FinishMessageMode.Default, AutomaticalyDelay = 1f, DefaultTextColor = Color.white, DefaultTextSize = 20, };
-            this.RelativeFormats = new MessageRelativeFormats[languageCount];
+            this.Overrides = new MessageOverrides() { TickTime = 0.15f, SoundMode = MessageOverrides.MessageSoundMode.ByChar, FinishMessage = MessageOverrides.FinishMessageMode.Default, AutomaticalyDelay = 1f, DefaultTextColor = Color.white, DefaultTextSize = 50, };
+            this.RelativeFormats = new MessageRelativeFormats();
             this.DynamicSources = new MessageDynamicSources() { ChangingSoundsMode = MessageDynamicSources.ChangingSoundMode.Loop };
         }
     }

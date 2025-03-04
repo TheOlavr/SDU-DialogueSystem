@@ -8,7 +8,8 @@ namespace SimpleDialogue
         public static event Action OnKeysUpdate;
 
         public static event Action OnSettingsUpdate;
-
+        
+        /*
         public static event Action<Byte> OnLanguageChange;
 
         public static String Language
@@ -28,6 +29,7 @@ namespace SimpleDialogue
 
         private static Byte _currentLanguageIndex = 0;
         private static String[] _languageNames = { "ENG" };
+        */
 
         public static KeyCode ActiveSubmitKey
         {
@@ -101,7 +103,7 @@ namespace SimpleDialogue
 
         public static IntervalChar[] IntervalChars = { new IntervalChar(',', 5f), new IntervalChar('.', 8f), new IntervalChar('!', 8f) };
 
-        public static void SetLanguage(byte languageIndex)
+      /*  public static void SetLanguage(byte languageIndex)
         {
             if (languageIndex <= _languageNames.Length)
             {
@@ -147,6 +149,7 @@ namespace SimpleDialogue
         {
             return _languageNames;
         }
+      */
 
         private static DialogueSystemBrain _mainSceneBehaviour;
 
@@ -155,10 +158,24 @@ namespace SimpleDialogue
             get { return _mainSceneBehaviour; }
         }
 
+        public static Boolean IsPlaying
+        {
+            get
+            {
+                if (_mainSceneBehaviour != null)
+                {
+                    return _mainSceneBehaviour.IsPlaying;
+                }
+                else
+                {
+                    Debug.LogError("There no DialogueSystemBrain in scene");
+                    return false;
+                }
+            }
+        }
+
         public static void SetAllOptions(DialogueSystemStaticOptions options)
         {
-            _currentLanguageIndex = options.CurrentLanguageIndex;
-            _languageNames = options.LanguageNames;
             _activeSubmitKey = options.ActiveSubmitKey;
             _altSubmitKey = options.AltSubmitKey;
             _activeSkipKey = options.ActiveSkipKey;

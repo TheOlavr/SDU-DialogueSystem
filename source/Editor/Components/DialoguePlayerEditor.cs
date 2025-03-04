@@ -48,6 +48,7 @@ namespace SimpleDialogueEditor
 
         private void OnDisable()
         {
+            if (target != null) 
             EditorGUIUtility.SetIconForObject(target, new Texture2D(0,0));
         }
 

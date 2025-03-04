@@ -89,75 +89,91 @@ namespace SimpleDialogueEditor
                 AssetDatabase.SaveAssets();
             }
 
-            GUILayout.Space(5f); 
-
-            EditorGUILayout.BeginVertical("box");
-
-            if (!Application.isPlaying)
-                GUILayout.Label($"Current Language: {dialogueOptions.LanguageNames[dialogueOptions.CurrentLanguageIndex]}");
-            else
-                GUILayout.Label($"Current Language: {DialogueSystem.Language}");
-
-            if (Application.isPlaying)
-                GUILayout.Label($"Is Playing: {brain.IsPlaying}");
-            else
-                GUILayout.Label($"Is Playing: {false}");
-
-            if (Application.isPlaying)
-                GUILayout.Label($"Tick Time: {DialogueSystem.DefaultSettings.TickTime}");
-            else
-                GUILayout.Label($"Tick Time: {dialogueOptions.DefaultTickTime}");
-
-            GUILayout.Space(3f);
-
-            EditorGUILayout.BeginHorizontal();
-
-            EditorGUILayout.BeginVertical(GUILayout.Width(130));
-            if (Application.isPlaying)
-                GUILayout.Label($"Submit Key: {DialogueSystem.ActiveSubmitKey}");
-            else
-                GUILayout.Label($"Submit Key: {dialogueOptions.ActiveSubmitKey}");
-
-            if (Application.isPlaying)
-                GUILayout.Label($"Skip Key: {DialogueSystem.ActiveSkipKey}");
-            else
-                GUILayout.Label($"Skip Key: {dialogueOptions.ActiveSkipKey}");
-
-            if (Application.isPlaying)
-                GUILayout.Label($"SkipToAll Key: {DialogueSystem.ActiveSkipToAllKey}");
-            else
-                GUILayout.Label($"SkipToAll Key: {dialogueOptions.ActiveSkipToAllKey}");
-            
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.BeginVertical(GUILayout.Width(130));
-            if (Application.isPlaying)
-                GUILayout.Label($"Alt: {DialogueSystem.AltSubmitKey}");
-            else
-                GUILayout.Label($"Alt: {dialogueOptions.AltSubmitKey}");
-
-            if (Application.isPlaying)
-                GUILayout.Label($"Alt: {DialogueSystem.AltSkipKey}");
-            else
-                GUILayout.Label($"Alt: {dialogueOptions.AltSkipKey}");
-
-            if (Application.isPlaying)
-                GUILayout.Label($"Alt: {DialogueSystem.AltSkipToAllKey}");
-            else
-                GUILayout.Label($"Alt: {dialogueOptions.AltSkipToAllKey}");
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.EndVertical();
-
             GUILayout.Space(5f);
 
-            optionsProperty.objectReferenceValue = dialogueOptions;
+            if (dialogueOptions != null)
+            {
+                EditorGUILayout.BeginVertical(GUI.skin.box);
 
-            GUI.enabled = false;
-            EditorGUILayout.PropertyField(optionsProperty, new GUIContent("Dialogue System Options File"));
-            GUI.enabled = true;
+                /*
+                if (!Application.isPlaying)
+                    GUILayout.Label($"Current Language: {dialogueOptions.LanguageNames[dialogueOptions.CurrentLanguageIndex]}");
+                else
+                    GUILayout.Label($"Current Language: {DialogueSystem.Language}");
+                */
+
+                if (Application.isPlaying)
+                    GUILayout.Label($"Is Playing: {brain.IsPlaying}");
+                else
+                    GUILayout.Label($"Is Playing: {false}");
+
+                if (Application.isPlaying)
+                    GUILayout.Label($"Tick Time: {DialogueSystem.DefaultSettings.TickTime}");
+                else
+                    GUILayout.Label($"Tick Time: {dialogueOptions.DefaultTickTime}");
+
+                if (Application.isPlaying)
+                    GUILayout.Label($"DefaultFont: {DialogueSystem.DefaultSettings.Font.name}");
+                else
+                    GUILayout.Label($"DefaultFont: {dialogueOptions.DefaultFont.name}");
+
+                GUILayout.Space(3f);
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUILayout.BeginVertical(GUILayout.Width(130));
+                if (Application.isPlaying)
+                    GUILayout.Label($"Submit Key: {DialogueSystem.ActiveSubmitKey}");
+                else
+                    GUILayout.Label($"Submit Key: {dialogueOptions.ActiveSubmitKey}");
+
+                if (Application.isPlaying)
+                    GUILayout.Label($"Skip Key: {DialogueSystem.ActiveSkipKey}");
+                else
+                    GUILayout.Label($"Skip Key: {dialogueOptions.ActiveSkipKey}");
+
+                if (Application.isPlaying)
+                    GUILayout.Label($"SkipToAll Key: {DialogueSystem.ActiveSkipToAllKey}");
+                else
+                    GUILayout.Label($"SkipToAll Key: {dialogueOptions.ActiveSkipToAllKey}");
+
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.BeginVertical(GUILayout.Width(130));
+                if (Application.isPlaying)
+                    GUILayout.Label($"Alt: {DialogueSystem.AltSubmitKey}");
+                else
+                    GUILayout.Label($"Alt: {dialogueOptions.AltSubmitKey}");
+
+                if (Application.isPlaying)
+                    GUILayout.Label($"Alt: {DialogueSystem.AltSkipKey}");
+                else
+                    GUILayout.Label($"Alt: {dialogueOptions.AltSkipKey}");
+
+                if (Application.isPlaying)
+                    GUILayout.Label($"Alt: {DialogueSystem.AltSkipToAllKey}");
+                else
+                    GUILayout.Label($"Alt: {dialogueOptions.AltSkipToAllKey}");
+
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.EndVertical();
+
+                GUILayout.Space(5f);
+
+                optionsProperty.objectReferenceValue = dialogueOptions;
+
+                GUI.enabled = false;
+                EditorGUILayout.PropertyField(optionsProperty, new GUIContent("Dialogue System Options File"));
+                GUI.enabled = true;
+            }
+            else
+            {
+                EditorGUILayout.PropertyField(optionsProperty, new GUIContent("Dialogue System Options File"));
+                EditorGUILayout.HelpBox("Failed to find Options File", MessageType.Warning);
+            }
         }
     }
 }
