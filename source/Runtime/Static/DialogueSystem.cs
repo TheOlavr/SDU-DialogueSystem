@@ -8,28 +8,6 @@ namespace SimpleDialogue
         public static event Action OnKeysUpdate;
 
         public static event Action OnSettingsUpdate;
-        
-        /*
-        public static event Action<Byte> OnLanguageChange;
-
-        public static String Language
-        {
-            get { return _languageNames[_currentLanguageIndex]; }
-        }
-
-        public static Byte LanguageIndex
-        {
-            get { return _currentLanguageIndex; }
-        }
-
-        public static Byte LanguageCount
-        {
-            get { return (Byte)_languageNames.Length; }
-        }
-
-        private static Byte _currentLanguageIndex = 0;
-        private static String[] _languageNames = { "ENG" };
-        */
 
         public static KeyCode ActiveSubmitKey
         {
@@ -102,54 +80,6 @@ namespace SimpleDialogue
         public static Char[] SoundlessChars = { ' ', '.', ',', '?' };
 
         public static IntervalChar[] IntervalChars = { new IntervalChar(',', 5f), new IntervalChar('.', 8f), new IntervalChar('!', 8f) };
-
-      /*  public static void SetLanguage(byte languageIndex)
-        {
-            if (languageIndex <= _languageNames.Length)
-            {
-                _currentLanguageIndex = languageIndex;
-                OnLanguageChange?.Invoke(languageIndex);
-            }
-            else
-            {
-                Debug.LogError($"The language is not set by '{languageIndex}' index.\nСheck the supplied languages ​​and pass the existing language index");
-            }
-        }
-
-        public static void SetLanguage(string language)
-        {
-            for (byte i = 0;  i < _languageNames.Length; i++)
-            {
-                if (_languageNames[i] == language)
-                {
-                    _currentLanguageIndex = i;
-                    OnLanguageChange?.Invoke(i);
-                    return;
-                }
-            }
-            Debug.LogError($"\"{language}\" is unknown language.\nСheck the supplied languages ​​and pass the existing language name"); 
-        }
-
-        public static void SetLanguageOptions(string[] names, Byte currentIndex)
-        {
-            if (names != null)
-            {
-                if (names.Length > 0)
-                {
-                    if (currentIndex > names.Length - 1)
-                    {
-                        _languageNames = names;
-                        _currentLanguageIndex = currentIndex;
-                    }
-                }
-            }
-        }
-
-        public static string[] GetLanguagesArray()
-        {
-            return _languageNames;
-        }
-      */
 
         private static DialogueSystemBrain _mainSceneBehaviour;
 

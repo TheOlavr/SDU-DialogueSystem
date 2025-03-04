@@ -109,15 +109,7 @@ namespace SimpleDialogueEditor
                 activeSkipToAllKey = DialogueOptions.ActiveSkipToAllKey;
                 altSkipToAllKey = DialogueOptions.AltSkipToAllKey;
 
-                //currentLanguageIndex = DialogueOptions.CurrentLanguageIndex;
-                //languageNames = DialogueOptions.LanguageNames;
-
                 isLanguageEditing = false;
-            }
-            else
-            {
-                //languageNames = DialogueSystem.GetLanguagesArray();
-                //currentLanguageIndex = DialogueSystem.LanguageIndex;
             }
         }
 
@@ -132,27 +124,6 @@ namespace SimpleDialogueEditor
         {
             if (!Application.isPlaying)
             {
-
-               /* if (!isLanguageEditing)
-                {
-                    ViewLanguage();
-                    EditorGUILayout.Space(3f);
-                    if (EditorGUILayout.LinkButton("Edit Languages"))
-                    {
-                        isLanguageEditing = true;
-                        titleContent = new GUIContent("Language Editing", new Texture2D(0, 0));
-                    }
-                }
-                else
-                {
-                    ViewLanguageList();
-                    EditorGUILayout.Space(3f);
-                    if (EditorGUILayout.LinkButton("Exit Editing"))
-                    {
-                        isLanguageEditing = false;
-                        titleContent = new GUIContent("Dialogue System", _mainIcon);
-                    }
-                } */
 
                 if (!isLanguageEditing)
                 {
@@ -252,8 +223,6 @@ namespace SimpleDialogueEditor
                 }
                 
 
-                //DialogueOptions.CurrentLanguageIndex = currentLanguageIndex;
-                //DialogueOptions.LanguageNames = languageNames;
                 DialogueOptions.ActiveSubmitKey = activeSubmitKey;
                 DialogueOptions.AltSubmitKey = altSubmitKey;
                 DialogueOptions.ActiveSkipKey = activeSkipKey;
@@ -269,8 +238,6 @@ namespace SimpleDialogueEditor
             }
             else
             {
-                //ViewLanguage();
-                //DialogueSystem.SetLanguageOptions(languageNames, currentLanguageIndex);
                 EditorGUILayout.Space(5f);
                 EditorGUILayout.LabelField("Input", EditorStyles.boldLabel);
                 EditorGUILayout.BeginHorizontal();

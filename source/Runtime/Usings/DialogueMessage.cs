@@ -169,19 +169,6 @@ namespace SimpleDialogue
             return outText;
         }
 
-       /* private string GetLanguageText()
-        {
-            string currentText = Text[DialogueSystem.LanguageIndex];
-            if (currentText != null)
-            {
-                return currentText;
-            }
-            else
-            {
-                return Text[0];
-            }
-        } */
-
         private string AddColorFormat(string charText, Color color)
         {
             string HEX = 
@@ -216,11 +203,6 @@ namespace SimpleDialogue
         // CONSTRUCTOR
         public DialogueMessage(string Text, Sprite SpeakerIcon, AudioClip SpeakerSound, byte languageCount)
         {
-           /* this.Text = new string[Text.Length];
-            for (int i = 0; i < Text.Length; i++)
-            {
-                this.Text[i] = Text[i];
-            } */
             this.Text = Text;
             this.SpeakerIcon = SpeakerIcon;
             this.SpeakerSound = SpeakerSound;
@@ -232,11 +214,6 @@ namespace SimpleDialogue
         // DOUBLE CONSTRUCTOR
         public DialogueMessage(DialogueMessage reference)
         {
-           /* this.Text = new string[reference.Text.Length];
-            for (int i = 0; i < reference.Text.Length; i++)
-            {
-                this.Text[i] = reference.Text[i];
-            } */
             this.Text = reference.Text;
             this.SpeakerIcon = reference.SpeakerIcon;
             this.SpeakerSound = reference.SpeakerSound;
